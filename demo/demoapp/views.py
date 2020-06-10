@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django_rest_framework import generics, serializers
 from djgentelella.notification import create_notification
 from .forms import FooModelForm, FooBasicForm, ColorWidgetsForm, SimpleColorForm
-from .models import Foo
+from .models import Foo, Person
 # Create your views here.
 
 @login_required
@@ -44,4 +45,14 @@ def color_widget_view(request):
         form.save()
     return render(request, 'index-color.html', {'form': form,
                                                 "form_widgets": form_widgets})
+
+class PersonSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    num_children = serializers.IntegerField()
+    country = serializers.CharField()
+    
+class datatable_view(generics.ListAPIView):
+    class =  Person
+    fields = ["name", "num_children", "country", "born_date"]
+    
 
