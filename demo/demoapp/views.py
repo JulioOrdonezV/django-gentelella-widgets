@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from rest_framework import generics, serializers
+from rest_framework import serializers
 from djgentelella.notification import create_notification
 from djgentelella.datatables.datatable_view import DataTableView
 from .forms import FooModelForm, ColorWidgetsForm, SimpleColorForm
