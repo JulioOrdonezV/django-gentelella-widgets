@@ -6,7 +6,8 @@ from demoapp.views import (
     create_notification_view,
     color_widget_view,
     knobView,
-    MyTableView
+    MyTableView,
+    my_table_view_template
 )
 
 pclss = Personclass()
@@ -18,5 +19,6 @@ urlpatterns = [
     url(r'^markitup/', include('markitup.urls')),
     path('knobwidget/testform', knobView, name="knobwidgets"),
     path('colorwidgets', color_widget_view, name="colorwidgets"),
-    path('datatable/person_model_data', MyTableView, name="table_data"),
+    path('datatable/data', MyTableView, name="table_data"),
+    path('datatable/person_model_table', my_table_view_template, name="person_table")
 ] + pclss.get_urls() + countryclss.get_urls() + menuclss.get_urls()
