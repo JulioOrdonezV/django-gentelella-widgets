@@ -34,7 +34,7 @@ def knobView(request):
         form  = FooModelForm(request.POST)
         if form.is_valid():
             form.save()
-            form = FooModelForm()     
+            form = FooModelForm()
     return render(request, 'knobs-form.html', {'form': form})
 
 def color_widget_view(request):
@@ -47,6 +47,9 @@ def color_widget_view(request):
     return render(request, 'index-color.html', {'form': form,
                                                 "form_widgets": form_widgets})
 
+def my_table_view_template(request):
+    return render(request, "table_view.html")
+
 class PersonSerializer(serializers.ModelSerializer):
     """serializer required by the table view"""
     class Meta:
@@ -57,3 +60,4 @@ class MyTableView(DataTableView):
     """demo implementation of DataTableView view class"""
     model = Person
     serializer_class = PersonSerializer
+
