@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django_rest_framework import generics, serializers
+from rest_framework import generics, serializers
 from djgentelella.notification import create_notification
-from .forms import FooModelForm, FooBasicForm, ColorWidgetsForm, SimpleColorForm
-from .models import Foo, Person
+from .forms import FooModelForm, ColorWidgetsForm, SimpleColorForm
+from .models import Person
 # Create your views here.
 
 @login_required
@@ -32,8 +32,7 @@ def knobView(request):
         form  = FooModelForm(request.POST)
         if form.is_valid():
             form.save()
-            form = FooModelForm()
-            
+            form = FooModelForm()     
     return render(request, 'knobs-form.html', {'form': form})
 
 def color_widget_view(request):
@@ -46,13 +45,12 @@ def color_widget_view(request):
     return render(request, 'index-color.html', {'form': form,
                                                 "form_widgets": form_widgets})
 
-class PersonSerializer(serializers.Serializer):
-    name = serializers.CharField()
-    num_children = serializers.IntegerField()
-    country = serializers.CharField()
-    
-class datatable_view(generics.ListAPIView):
-    class =  Person
-    fields = ["name", "num_children", "country", "born_date"]
-    
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = ["name", "num_children", "country"]
 
+class DataTableView(generics.ListAPIView):
+    """demo implementation of DataTable View"""
+    model = Person
+    serializer_class = PersonSerializer
