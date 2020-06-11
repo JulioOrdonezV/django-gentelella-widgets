@@ -3,8 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from rest_framework import generics, serializers
 from djgentelella.notification import create_notification
+from djgentelella.datatables.datatable_view import DataTableView
 from .forms import FooModelForm, ColorWidgetsForm, SimpleColorForm
 from .models import Person
+
 # Create your views here.
 
 @login_required
@@ -46,11 +48,12 @@ def color_widget_view(request):
                                                 "form_widgets": form_widgets})
 
 class PersonSerializer(serializers.ModelSerializer):
+    """serializer required by the table view"""
     class Meta:
         model = Person
         fields = ["name", "num_children", "country"]
 
-class DataTableView(generics.ListAPIView):
-    """demo implementation of DataTable View"""
+class MyTableView(DataTableView):
+    """demo implementation of DataTableView view class"""
     model = Person
     serializer_class = PersonSerializer
