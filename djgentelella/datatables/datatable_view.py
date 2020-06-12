@@ -27,4 +27,4 @@ class DataTableView(generics.ListAPIView):
             "or override the `get_serializaer_class()` method."
             % self.__class__.__name__
         )
-        return self.serializer_class.__class__
+        return self.serializer_class
