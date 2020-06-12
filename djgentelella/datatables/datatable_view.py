@@ -24,7 +24,7 @@ class DataTableView(generics.ListAPIView):
         """User should provide the serializer for the model"""
         assert self.serializer_class is not None, (
             "'%s' should either include a `serializer_class` attribute, "
-            "or override the `get_serializaer_class()` method."
+            "or override the `get_serializer_class()` method."
             % self.__class__.__name__
         )
         return self.serializer_class
