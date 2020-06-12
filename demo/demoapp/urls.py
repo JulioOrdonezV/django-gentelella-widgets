@@ -19,6 +19,6 @@ urlpatterns = [
     url(r'^markitup/', include('markitup.urls')),
     path('knobwidget/testform', knobView, name="knobwidgets"),
     path('colorwidgets', color_widget_view, name="colorwidgets"),
-    path('datatable/data', MyTableView, name="table_data"),
+    path('datatable/data', MyTableView.as_view(), name="table_data"),
     path('datatable/person_model_table', my_table_view_template, name="person_table")
 ] + pclss.get_urls() + countryclss.get_urls() + menuclss.get_urls()
