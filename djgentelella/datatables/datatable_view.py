@@ -2,7 +2,20 @@
 Server side rendering of data, ordering and other actions
 for the datatable.net JQuery plugin using django rest framework
 """
-from rest_framework import generics
+from rest_framework import generics, pagination
+from rest_framework.response import Response
+
+class CustomPagination(pagination.PageNumberPagination):
+    """returns the data with the proper structure for the datatable plugin"""
+    def get_paginated_response(self, data):
+        return Response({
+            'links': {
+                'next': self.get_next_link(),
+                'previous': self.get_previous_link()
+            },
+            'count': self.page.paginator.count,
+            'results': data
+        })
 
 class DataTableView(generics.ListAPIView):
     """class that needs to be implemented by the user"""
