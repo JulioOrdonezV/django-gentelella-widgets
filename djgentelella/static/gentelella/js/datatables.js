@@ -2,6 +2,11 @@ $(document).ready(function() {
     $('.data-table').DataTable( {
         "processing": true,
         "serverSide": true,
-        "ajax": "datatable/data"
+        "ajax": "data",
+        "columns": [
+            { "data": "name" },
+            { "data": "num_children" },
+            { "data": "country" }
+        ]
     } );
 } );
