@@ -17,7 +17,7 @@ class DataTableView(generics.ListAPIView):
     """class that needs to be implemented by the user"""
     model = None
     fields = [] #fields that the will show up in the json response
-    pagination_class = None
+    pagination_class = CustomPagination
     serializer_class = None #User should provide the serializer class to be used
 
     def get_queryset(self):
