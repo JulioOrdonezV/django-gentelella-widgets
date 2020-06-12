@@ -1,1 +1,13 @@
-{% extends 'gentelella/index.html' %}
+{% extends 'gentelella/base_site.html'%}
+{% load static %}
+{% block content %}
+<div>
+    <table class="data-table"></table>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'vendors/datetables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'gentelella/js/datatables.js' %}"></script>
+{% endblock %}
