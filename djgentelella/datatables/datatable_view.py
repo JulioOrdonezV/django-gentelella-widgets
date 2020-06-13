@@ -8,10 +8,18 @@ from rest_framework.response import Response
 class CustomPagination(pagination.PageNumberPagination):
     """returns the data with the proper structure for the datatable plugin"""
     page_size = 10
+    page_size_query_param = "length"
+    max_page_size = 100
+    draw = 0
+
+    def paginate_queryset(self, queryset, request, view=None):
+        """need to provide the "draw" param from the request back in the response"""
+        self.draw = request.query_params.get('draw') if not None else 0
+        return super().paginate_queryset(queryset, request, view=view)
 
     def get_paginated_response(self, data):
         return Response({
-            'draw': 1,
+            'draw': self.draw,
             'data': data,
             'recordsTotal': 1,
             'recordsFiltered': 1
