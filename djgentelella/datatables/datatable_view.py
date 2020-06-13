@@ -5,11 +5,12 @@ for the datatable.net JQuery plugin using django rest framework
 from rest_framework import generics, pagination
 from rest_framework.response import Response
 
-class CustomPagination(pagination.PageNumberPagination):
+class CustomPagination(pagination.LimitOffsetPagination):
     """returns the data with the proper structure for the datatable plugin"""
-    page_size = 10
-    page_size_query_param = "length"
-    max_page_size = 100
+    default_limit = 10
+    limit_query_param = "length"
+    offset_query_param = "start"
+    max_limit = 100
     draw = 0
     records_total = 0
 
@@ -24,7 +25,7 @@ class CustomPagination(pagination.PageNumberPagination):
             'draw': self.draw,
             'data': data,
             'recordsTotal': self.records_total,
-            'recordsFiltered': 1
+            'recordsFiltered': self.records_total
         })
 
 class DataTableView(generics.ListAPIView):
