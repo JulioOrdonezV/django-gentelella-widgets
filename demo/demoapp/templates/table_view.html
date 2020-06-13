@@ -1,8 +1,20 @@
 {% extends 'gentelella/base_site.html'%}
 {% load static %}
+{% block stylesheets %}
+{{ block.super }}
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet"></script>
+{% endblock %}
 {% block content %}
 <div>
-    <table class="data-table"></table>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>number of children</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 {% endblock %}
