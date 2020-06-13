@@ -11,17 +11,19 @@ class CustomPagination(pagination.PageNumberPagination):
     page_size_query_param = "length"
     max_page_size = 100
     draw = 0
+    records_total = 0
 
     def paginate_queryset(self, queryset, request, view=None):
         """need to provide the "draw" param from the request back in the response"""
         self.draw = request.query_params.get('draw') if not None else 0
+        self.records_total = queryset.count()
         return super().paginate_queryset(queryset, request, view=view)
 
     def get_paginated_response(self, data):
         return Response({
             'draw': self.draw,
             'data': data,
-            'recordsTotal': 1,
+            'recordsTotal': self.records_total,
             'recordsFiltered': 1
         })
 
