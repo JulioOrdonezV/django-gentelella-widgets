@@ -1,7 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from rest_framework import serializers
+from rest_framework.serializers import (
+    ModelSerializer,
+    SerializerMethodField
+)
 from djgentelella.notification import create_notification
 from djgentelella.datatables.datatable_view import DataTableView
 from .forms import FooModelForm, ColorWidgetsForm, SimpleColorForm
@@ -50,14 +53,18 @@ def color_widget_view(request):
 def my_table_view_template(request):
     return render(request, "table_view.html")
 
-class PersonSerializer(serializers.ModelSerializer):
+class PersonSerializer(ModelSerializer):
     """serializer required by the table view"""
+    country = SerializerMethodField()
     class Meta:
         model = Person
         fields = ["name", "num_children", "country"]
+
+    def get_country(self, obj):
+        """returns the country name"""
+        return str(obj.country.name)
 
 class MyTableView(DataTableView):
     """demo implementation of DataTableView view class"""
     model = Person
     serializer_class = PersonSerializer
-
